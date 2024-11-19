@@ -1,4 +1,8 @@
-//TODO https://www.youtube.com/watch?v=vyqbNFMDRGQ&t=4060s
+/*
+
+    Made by: MrEidam
+
+*/
 
 const canvas = document.querySelector('canvas');
 const ctx = canvas.getContext('2d');
@@ -133,6 +137,23 @@ function rectangularCollision({ rectangle0, rectangle1}){
     )
 }
 
+let time = 10;
+function decreaseTimer(){
+    setTimeout(decreaseTimer, 1000);
+    if(time){
+        time--;
+        document.querySelector('#timer').innerHTML = time;
+    }else if(!time){
+        if(player.health === enemy.health){
+            resultText('draw');
+        }else if(player.health > enemy.health){
+            resultText('won');
+        }else{
+            resultText('lost');
+        }
+    }
+}
+decreaseTimer()
 function animate(){
     window.requestAnimationFrame(animate);
     ctx.fillStyle = `#000`;
