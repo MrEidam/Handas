@@ -1,0 +1,64 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+#THEGAME{
+    position: relative;
+    width: 1024px;
+}
+.container{
+    position: absolute;
+    display: flex;
+    align-items: center;
+    width: 1024px;
+    padding: 20px;
+}
+
+.health{
+    position: relative;
+    height: 45px;
+    width: 100px;
+    width: 100%;
+}
+
+#timer{
+    background: #f00;
+    width: 100px;
+    height: 100px;
+    flex-shrink: 0;
+}
+
+.over{
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    background: #24a2fe;
+}
+
+#Phealth{
+    background: #ff0;
+    height: 45px;
+    width: 100%;
+}
+
+#playerStat{
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+}
+
+#Php{
+    width: 100%;
+}
+
+#Ehealth{
+    background: #ff0;
+    height: 45px;
+}
+
+#Ehp{
+    left: 0;
+}
