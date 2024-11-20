@@ -66,47 +66,11 @@
     left: 0;
 }
 
-
-
-.result{
+#displayText{
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    filter: drop-shadow(1.5px 1.5px 6px #000);
-    text-transform: uppercase;
-    text-align: center;
     font-size: 50px;
-    animation: pop 0.6s ease-in-out;
-    opacity: 0;
-}
-
-.won{
-    color: #0f0;
-}
-
-.lost{
-    color: #f00;
-}
-
-.draw{
     color: #fff;
-}
-
-@keyframes pop{
-    0%{
-        font-size: 25px;
-        opacity: 0;
-    }
-    20%{
-        opacity: 1;
-    }
-    75%{
-        font-size: 75px;
-        opacity: 1;
-    }
-    100%{
-        font-size: 50px;
-        opacity: 0;
-    }
 }

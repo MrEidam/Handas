@@ -14,62 +14,19 @@ ctx.fillRect(0, 0, canvas.width, canvas.height);
 
 const gravity = .69;
 
-class Sprite{
-    constructor({position, velocity, size, color, offset}){
-        this.position = position;
-        this.velocity = velocity;
-        this.height = size.height;
-        this.width = size.width;
-        this.lastkey;
-        this.attackBox = {
-            position: {
-                x: this.position.x,
-                y: this.position.y,
-            },
-            offset,
-            width: 100,
-            height: 50,
-        }
-        this.color = color;
-        this.isAttacking;
-        this.health = 100;
-    }
+const background = new Sprite({
+    position:{
+        x: 0,
+        y: 0,
+    },
+    size:{
+        width: canvas.width,
+        height: canvas.height,
+    },
+    imgSrc: '../Assets/backgroung.png',
+});
 
-    draw(){
-        ctx.fillStyle = this.color;
-        ctx.fillRect(this.position.x, this.position.y, this.width, this.height);
-
-        //- Attack
-        if(this.isAttacking){
-            ctx.fillStyle = `#ff0`;
-            ctx.fillRect(this.attackBox.position.x, this.attackBox.position.y, this.attackBox.width, this.attackBox.height);
-        }
-    }
-
-    update(){
-        this.draw();
-        this.attackBox.position.x = this.position.x + this.attackBox.offset.x;
-        this.attackBox.position.y = this.position.y;
-
-        this.position.x += this.velocity.x;
-        this.position.y += this.velocity.y;
-
-        if(this.position.y + this.height + this.velocity.y >= canvas.height){
-            this.velocity.y = 0;
-        }else{
-            this.velocity.y += gravity;
-        }
-    }
-
-    attack(){
-        this.isAttacking = true;
-        setTimeout(() => {
-            this.isAttacking = false;
-        }, 100);
-    }
-}
-
-const player = new Sprite({
+const player = new Fighter({
     position:{
         x: 0,
         y: 0
@@ -89,7 +46,7 @@ const player = new Sprite({
     color: `blue`,
 });
 
-const enemy = new Sprite({
+const enemy = new Fighter({
     position:{
         x: 500,
         y: 100
@@ -137,27 +94,36 @@ function rectangularCollision({ rectangle0, rectangle1}){
     )
 }
 
-let time = 10;
-function decreaseTimer(){
-    setTimeout(decreaseTimer, 1000);
-    if(time){
-        time--;
-        document.querySelector('#timer').innerHTML = time;
-    }else if(!time){
-        if(player.health === enemy.health){
-            resultText('draw');
-        }else if(player.health > enemy.health){
-            resultText('won');
-        }else{
-            resultText('lost');
-        }
+function determineWinner({player, enemy, timerId}){
+    clearTimeout(timerId);
+    document.querySelector('#displayText').style.display = "flex";
+    if(player.health === enemy.health){
+        document.querySelector('#displayText').innerHTML = `Draw!`;
+    }else if(player.health > enemy.health){
+        document.querySelector('#displayText').innerHTML = `Player 1  wins!`;
+    }else{
+        document.querySelector('#displayText').innerHTML = `Player 2 wins!`;
     }
 }
-decreaseTimer()
+
+let time = 60;
+let timerId;
+function decreaseTimer(){
+    timerId = setTimeout(decreaseTimer, 1000);
+    if(time > 0){
+        time--;
+        document.querySelector('#timer').innerHTML = time;
+    }else if(time === 0){
+        determineWinner({player, enemy, timerId});
+    }
+}
+decreaseTimer();
+
 function animate(){
     window.requestAnimationFrame(animate);
     ctx.fillStyle = `#000`;
     ctx.fillRect(0,0,canvas.width,canvas.height);
+    background.update();
     player.update();
     enemy.update();
 
@@ -197,6 +163,11 @@ function animate(){
             player.health -= 20;
             document.querySelector('#Php').style.width = `${player.health}%`
             console.log('ENEMY SCUM!');
+    }
+
+    //? ENDING DA GAM
+    if(enemy.health <= 0 || player.health <= 0){
+        determineWinner({player, enemy, timerId});
     }
 }
 animate();
