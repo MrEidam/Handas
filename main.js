@@ -19,7 +19,7 @@ const background = new Sprite({
         x: 0,
         y: 0,
     },
-    imgSrc: '../Assets/backgroung.png',
+    imgSrc: './Assets/backgroung.png',
 });
 
 const mushroom = new Sprite({
@@ -27,7 +27,7 @@ const mushroom = new Sprite({
         x: 780,
         y: 400,
     },
-    imgSrc: '../Assets/Mushroom-Idle.png',
+    imgSrc: './Assets/Mushroom-Idle.png',
     frames: 7,
     speed: 5,
     scale: 2,
