@@ -160,7 +160,9 @@ window.addEventListener('keydown', (e) => {
             player.lastkey = 'a';
             break;
         case 'w':
-            player.velocity.y = -20;
+            if(player.position.y+player.height>=canvas.height-50){
+                player.velocity.y = -20;
+            }
             break;
         case ' ':
             player.attack();
@@ -178,7 +180,9 @@ window.addEventListener('keydown', (e) => {
             enemy.lastkey = 'ArrowLeft';
             break;
         case 'ArrowUp':
-            enemy.velocity.y = -20;
+            if(enemy.position.y+enemy.height>=canvas.height-50){
+                enemy.velocity.y = -20;
+            }
             break;
         case 'ArrowDown':
             enemy.attack();
